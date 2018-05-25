@@ -1,9 +1,17 @@
+IDS=`blkid -o value /dev/sda3`
 
-ID=`sudo blkid /dev/sda3`
-echo 'sda3_crypt UUID=$ID none luks,discard' > /target/etc/crypttab
+VALUES=()
+for val in $IDS ; do
+        VALUES+=("$val")
+done
+ 
 
-#echo $ID
+#echo 'sda3_crypt UUID=${VALUES[1]} none luks,discard' > /target/etc/crypttab
+echo "sda3_crypt UUID=${VALUES[1]} none luks,discard" 
 
+
+
+exit;
 sudo mount -t proc proc /target/proc
 sudo mount --rbind /sys /target/sys
 sudo mount --rbind /dev /target/dev
