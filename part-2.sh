@@ -6,8 +6,8 @@ for val in $IDS ; do
 done
  
 
-#echo 'sda3_crypt UUID=${VALUES[1]} none luks,discard' > /target/etc/crypttab
-echo "sda3_crypt UUID=${VALUES[1]} none luks,discard" 
+#echo 'sda3_crypt UUID=${VALUES[0]} none luks,discard' > /target/etc/crypttab
+echo "sda3_crypt UUID=${VALUES[0]} none luks,discard" 
 
 
 
