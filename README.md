@@ -1,3 +1,15 @@
+If you do full disk encryption with Ubuntu, the Installer will set up the Luks / LVM partition to take the entire hard drive.
+
+There is no option for specifying the Luks / LVM partition size.
+
+This is a workaround for if you want to partition a drive, leaving one or more partitions unencrypted.
+
+1.  Boot from Installer USB drive.
+
+2.  
+
+Caution:  Currently the scripts are designed to work in 
+
 
 1. Do normal LUKS full disk install.
 
