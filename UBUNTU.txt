@@ -1,0 +1,45 @@
+https://askubuntu.com/questions/1028830/how-do-i-install-cuda-on-ubuntu-18-04
+
+
+
+#  Text scaling:
+
+sudo apt-get install notify-osd
+sudo apt-get install overlay-scrollbar
+
+sudo apt install unity-tweak-tool
+
+
+------------
+
+sudo -s
+vgcreate system /dev/disk/by-id/dm-name_sda3_crypt
+lvcreate -L 2G -n swap system
+lvcreate -L 30G -n root system
+lvcreate -l 100%FREE -n home system
+
+What I did:  ONLY
+vgcreate ubuntu-vg /dev/disk/by-id/dm-name-sda3_crypt
+lvcreate -l 100%FREE -n root ubuntu-vg
+
+Do Installer again - see link
+
+Last part of install:
+
+blkid /dev/sda3
+
+echo 'sda3_crypt UUID=(the uuid without quotes) none luks,discard' > /target/etc/crypttab
+echo 'sda3_crypt UUID=6f603e9b-196e-48b3-b381-a5ab3a64bf11 none luks,discard' > /target/etc/crypttab
+
+mount -t proc proc /target/proc
+mount --rbind /sys /target/sys
+mount --rbind /dev /target/dev
+chroot /target
+
+
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader=ubuntu --boot-directory=/boot/efi/EFI/ubuntu --recheck /dev/sda
+grub-mkconfig --output=/boot/efi/EFI/ubuntu/grub/grub.cfg
+update-initramfs -ck all
+exit
+reboot
+
