@@ -8,13 +8,15 @@ https://vitobotta.com/2018/01/11/ubuntu-full-disk-encryption-manual-partitioning
 
 1.  I didn't want separate root and home partitions.  Everything as root was fine.
 
-2.  The instructions have to be changed slightly for the LVM setup. 
+2.  I didn't want a swap partition. Swap files preferred.
 
-3.  The bash script part-1.sh does this.
+3.  The instructions have to be changed slightly (vg name) for the LVM setup. 
 
-4.  The bash script part-2.sh can be used to create the /etc/crypttab and do the mounts.
+4.  The bash script part-1.sh does this.
 
-5.  These need to be done manually:
+5.  The bash script part-2.sh can be used to create the /etc/crypttab and do the mounts.
+
+6.  These need to be done manually:
 
 sudo chroot /target
 
