@@ -1,35 +1,26 @@
 If you do full disk encryption with Ubuntu, the Installer will set up the Luks / LVM partition to take the entire hard drive.
 
-There is no option for specifying the Luks / LVM partition size.
+There is no option for specifying the Luks / LVM partition size
 
-This is a workaround for if you want to partition a drive, leaving one or more partitions unencrypted.
+This repo is intended to work with these instructions:
 
-1.  Boot from Installer USB drive.
+https://vitobotta.com/2018/01/11/ubuntu-full-disk-encryption-manual-partitioning-uefi/
 
-2.  
+1.  I didn't want separate root and home partitions.  Everything as root was fine.
 
-Caution:  Currently the scripts are designed to work in 
+2.  The instructions have to be changed slightly for the LVM setup. 
 
+3.  The bash script part-1.sh does this.
 
-1. Do normal LUKS full disk install.
+4.  The bash script part-2.sh can be used to create the /etc/crypttab and do the mounts.
 
-2. Reboot - then remove LUKS full disk partition.
+5.  These need to be done manually:
 
-3. Run installer, something else.., then 
-create a partition for the remaining disk space as “physical volume for encryption” for size you want.
+sudo chroot /target
 
-4.  Exit installer
+sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader=ubuntu --boot-directory=/boot/efi/EFI/ubuntu --recheck /dev/sda
 
-5.   Run script part-1.sh
+sudo grub-mkconfig --output=/boot/efi/EFI/ubuntu/grub/grub.cfg
 
-6.   Run installer again.
+update-initramfs -ck all
 
-7.   Select the boot partition (/dev/sda2), right-click then click “Change”, and ensure “Use as” is set to “ext2 file system” and the mount point to “/boot”. Then check “Format the partition” and confirm
-
-8.  Select the home volume (/dev/mapper/ubuntu--vg-root), right-click then click “Change”, and ensure “Use as” is set to “ext4 journaling file system” and the mount point to “/”; check “Format the partition” and confirm
-
-9.  Select /dev/sda as “Device for boot loader installation”
-
-10.  Finish installation again.  DO NOT REBOOT, leave the confirm window up.
-
-11.  Run script part-2.sh
